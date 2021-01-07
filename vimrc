@@ -1,6 +1,8 @@
-" calonaur's ~/.vimrc
+" harritaylor's ~/.vimrc
 "
-" designed for vim 8.0+ (or neovim) and tmux
+" designed for neovim and tmux.
+" includes heavy lervag/wiki.vim integration, so please inspect
+" and modify as necessary before using.
 
 " defaults
 let skip_defaults_vim=1

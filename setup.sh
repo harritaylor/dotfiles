@@ -20,3 +20,6 @@ ln -sf "$PWD/profile" "$HOME/.profile"
 
 # tmux
 ln -sf "$PWD/tmux.conf" "$HOME/.tmux.conf"
+
+# alacritty
+ln -sf "$PWD/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
