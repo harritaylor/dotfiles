@@ -3,7 +3,6 @@
 " designed for neovim and tmux.
 " includes heavy lervag/wiki.vim integration, so please inspect
 " and modify as necessary before using.
-
 " defaults
 let skip_defaults_vim=1
 set nocompatible
@@ -11,7 +10,6 @@ filetype on
 
 " https://swordandsignals.com/2020/12/13/5-lines-in-vimrc.html
 set hlsearch    " highlight all search results
-set ignorecase  " do case insensitive search 
 set incsearch   " show incremental search results as you type
 set number      " display line number
 set noswapfile  " disable swap file
@@ -62,6 +60,8 @@ syntax enable
 set ttyfast
 " inside voice
 set noerrorbells
+" no need to type noh
+set nohlsearch
 " enable 24-bit colour
 if exists('+termguicolors')
   set termguicolors
@@ -120,7 +120,9 @@ endif
 if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   call plug#begin("$HOME/.vim/plugged")
 
-  Plug 'tpope/vim-sensible',
+  Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-obsession'
+  Plug 'wakatime/vim-wakatime'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
@@ -136,12 +138,14 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   Plug 'KeitaNakamura/tex-conceal.vim'
   Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
   Plug 'tpope/vim-surround'
-
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'jpalardy/vim-slime'
 
   if has('nvim')
-    "Plug 'neovim/nvim-lspconfig' # TODO: uncomment this when 0.5 is released
-    Plug 'hkupty/iron.nvim'
+    Plug 'neovim/nvim-lspconfig' 
+    " Plug 'hkupty/iron.nvim'
   endif
+
   call plug#end()
 
   " junegunn/fzf
@@ -247,6 +251,10 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
 
   nmap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
   nmap <leader>f :resize 100<CR>
+
+  " jpalardy/vim-slime
+  let g:slime_target = "tmux"
+  let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
 
 
 
