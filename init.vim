@@ -3,4 +3,9 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc
 
-lua require('lspconfig').pyls.setup{}
+" TODO: uncomment when neovim reaches 0.5
+if has('nvim-0.5')
+	lua require('lspconfig').pyls.setup{}
+endif
+
+
