@@ -141,7 +141,7 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jpalardy/vim-slime'
 
-  if has('nvim')
+  if has('nvim-0.5')
     Plug 'neovim/nvim-lspconfig' 
     " Plug 'hkupty/iron.nvim'
   endif
