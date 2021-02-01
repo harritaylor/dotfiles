@@ -17,9 +17,11 @@ ln -sf "$PWD/inputrc" "$HOME/.inputrc"
 
 # bash
 ln -sf "$PWD/profile" "$HOME/.profile"
+ln -sf "$PWD/bashrc" "$HOME/.bashrc"
 
 # tmux
 ln -sf "$PWD/tmux.conf" "$HOME/.tmux.conf"
 
 # alacritty
+mkdir -p "$HOME/.config/alacritty"
 ln -sf "$PWD/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"

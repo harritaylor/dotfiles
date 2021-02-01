@@ -161,7 +161,7 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
 
   function! WikiRoot()
     let l:local = finddir('notes', ';./')
-    return !empty(l:local) ? l:local : '~/Sync/Notes/'
+    return !empty(l:local) ? l:local : '~/Documents/Notes/'
   endfunction
 
   let g:wiki_root = 'WikiRoot'
