@@ -122,7 +122,6 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
 
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-obsession'
-  Plug 'wakatime/vim-wakatime'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
