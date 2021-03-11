@@ -3,9 +3,10 @@
 #  bash && vim 8.0 / nvim
 
 # vim / neovim
-mkdir -p "$HOME/.config/nvim"
+# mkdir -p "$HOME/.config/nvim"
 ln -sf "$PWD/vimrc" "$HOME/.vimrc"
-ln -sf "$PWD/init.vim" "$HOME/.config/nvim/init.vim"
+# ln -sf "$PWD/init.vim" "$HOME/.config/nvim/init.vim"
+ln -sf "$PWD/nvim" "$HOME/.config/nvim"
 
 # git
 ln -sf "$PWD/gitignore" "$HOME/.gitignore"

@@ -14,6 +14,7 @@ set incsearch   " show incremental search results as you type
 set number      " display line number
 set noswapfile  " disable swap file
 
+
 " write files when changing buffer
 set autowrite
 " insert spaces instead of tabs
@@ -140,6 +141,7 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   Plug 'tpope/vim-surround'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jpalardy/vim-slime'
+  Plug 'djoshea/vim-autoread'
 
   if has('nvim-0.5')
     Plug 'neovim/nvim-lspconfig' 
@@ -173,6 +175,7 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   let g:wiki_map_link_create = 'WikiCreateMap'
   let g:wiki_template_title_month = '# %(month-name) %(year)'
   let g:wiki_template_title_week = '# %(year),Week %(week)'
+  let g:wiki_list_todos = ['[ ]', '[x]']
 
   " g:wiki_list_todos[0]
 
