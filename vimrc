@@ -121,13 +121,15 @@ endif
 if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
   call plug#begin("$HOME/.vim/plugged")
 
+  Plug 'axvr/org.vim'
+  Plug 'alok/notational-fzf-vim'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-obsession'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
-  " Plug 'lervag/wiki.vim'
-  Plug 'harritaylor/wiki.vim'
+  Plug 'lervag/wiki.vim'
+  " Plug 'harritaylor/wiki.vim'
   Plug 'flazz/vim-colorschemes'
   Plug 'godlygeek/tabular'
   Plug 'sheerun/vim-polyglot'
@@ -149,6 +151,17 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
 
   call plug#end()
 
+  " org.vim
+  let g:org_clean_folds = 1
+  let g:org_use_italics = 1
+  autocmd FileType org,outline map <buffer> <tab> za
+  " autocmd FileType org,outline setlocal nofoldenable
+
+
+  " fzf whatever
+  let g:nv_search_paths = ["~/Dropbox/Deft"]
+  nmap <leader>nd :NV!<CR>
+
   " junegunn/fzf
   nmap <leader>pt :Rg <C-R>=("TODO")<CR><CR> 
   nmap <leader>po :GFiles<CR>
@@ -162,7 +175,7 @@ if filereadable(expand("$HOME/.vim/autoload/plug.vim"))
 
   function! WikiRoot()
     let l:local = finddir('notes', ';./')
-    return !empty(l:local) ? l:local : '~/Documents/Notes/'
+    return !empty(l:local) ? l:local : '~/Dropbox/Notes/'
   endfunction
 
   let g:wiki_root = 'WikiRoot'

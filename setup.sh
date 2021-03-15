@@ -8,6 +8,10 @@ ln -sf "$PWD/vimrc" "$HOME/.vimrc"
 # ln -sf "$PWD/init.vim" "$HOME/.config/nvim/init.vim"
 ln -sf "$PWD/nvim" "$HOME/.config/nvim"
 
+# emacs 
+ln -sf "$PWD/doomd" "$HOME/.doom.d"
+
+
 # git
 ln -sf "$PWD/gitignore" "$HOME/.gitignore"
 ln -sf "$PWD/gitconfig" "$HOME/.gitconfig"
