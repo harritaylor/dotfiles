@@ -43,9 +43,7 @@ parser_configs.norg_table = {
 
 configs.setup {
   ensure_installed = {
-    "norg",
-    "norg_meta",
-    "norg_table",
+    "javascript",
     "vue",
     "python",
     "org"
