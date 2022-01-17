@@ -13,9 +13,11 @@ ln -sf "$PWD/gitignore" "$HOME/.gitignore"
 # Programs that require a directory in the .config dir
 mkdir -p "$HOME/.config/"
 
-# Neovim
+# Neovim / vim 8
 ln -sf "$PWD/nvim/" "$HOME/.config/"
+ln -sf "$PWD/vimrc" "$HOME/.vimrc"
+
 
 # Install the local binary directory
 mkdir -p "$HOME/.local/"
-ln -sf "$PWD/bin" "$HOME/.local/"
+# ln -sf "$PWD/bin" "$HOME/.local/"
