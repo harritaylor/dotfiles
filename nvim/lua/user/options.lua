@@ -33,6 +33,7 @@ local options = {
   scrolloff = 8,                           -- is one of my fav
   sidescrolloff = 8,
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
+  statusline = "%F"
 }
 
 vim.opt.shortmess:append "c"
@@ -45,4 +46,8 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
 
+-- Lervag wiki settings (for now) TODO: make this into it's own file
 vim.g.wiki_root = '~/Dropbox/org'
+vim.g.wiki_filetypes = {'md'}
+vim.g.wiki_link_extension = '.md'
+vim.g.wiki_fzf_pages_opts = '--preview "cat {1}"'
