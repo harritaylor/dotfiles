@@ -58,10 +58,7 @@ return packer.startup(function(use)
   use "goolord/alpha-nvim"
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
-  use {"nvim-orgmode/orgmode", config = function()
-    require('orgmode').setup{}
-    end
-  }
+  use "tpope/vim-fugitive"
   use "lervag/wiki.vim"
 
   -- Colorschemes

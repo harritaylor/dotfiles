@@ -83,21 +83,18 @@ lualine.setup({
 		always_divide_middle = true,
 	},
 	sections = {
-		lualine_a = { branch, diagnostics },
-    lualine_b = {},
---[[ 		lualine_b = { mode }, ]]
-		lualine_c = { filename },
-		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		-- lualine_x = { diff, spaces, "encoding", filetype } ,
-		lualine_x = { diff, filetype },
+		lualine_a = { diagnostics },
+    lualine_b = { filename },
+    lualine_c = { diff }, -- TODO: show branch if tmux not active
+		lualine_x = { filetype, 'fileformat' },
 		lualine_y = { location },
 		lualine_z = { progress }, 
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
-		lualine_c = { "filename" },
-		lualine_x = { "location" },
+		lualine_c = {},
+		lualine_x = {},
 		lualine_y = {},
 		lualine_z = {},
 	},

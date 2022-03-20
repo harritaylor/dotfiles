@@ -172,3 +172,20 @@ _have podman && _source_if "$HOME/.local/share/podman/completion" # d
 _source_if "$HOME/.bash_personal"
 _source_if "$HOME/.bash_private"
 _source_if "$HOME/.bash_work"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/hlt/.conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/hlt/.conda/etc/profile.d/conda.sh" ]; then
+        . "/home/hlt/.conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/hlt/.conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+. "$HOME/.cargo/env"
