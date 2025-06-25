@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Get the absolute path to the dotfiles directory
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Uninstall config symlinks
+for dir in config/*/; do
+    [ -d "$dir" ] || continue
+    dirname=$(basename "$dir")
+    target="$HOME/.config/$dirname"
+    
+    if [ -L "$target" ] && [ "$(readlink "$target")" = "$DOTFILES_DIR/$dir" ]; then
+        rm "$target"
+        echo "Removed symlink: $target"
+    fi
+done
+
+# Uninstall home symlinks  
+for file in home/*; do
+    [ -f "$file" ] || continue
+    filename=$(basename "$file")
+    target="$HOME/$filename"
+    
+    if [ -L "$target" ] && [ "$(readlink "$target")" = "$DOTFILES_DIR/$file" ]; then
+        rm "$target"
+        echo "Removed symlink: $target"
+    fi
+done
