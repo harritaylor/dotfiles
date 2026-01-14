@@ -1,0 +1,186 @@
+# Add this to your ~/.zshrc
+persist_function() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: persist_function <function_name>"
+    return 1
+  fi
+
+  local func_name="$1"
+  # 'whence -f' gives the function definition.
+  # 'typeset -f' is another option often more robust for exact re-sourcing.
+  local func_definition=$(typeset -f "$func_name")
+
+
+  if [[ -z "$func_definition" ]]; then
+    echo "Error: Function '$func_name' not found in current session."
+    return 1
+  fi
+
+  # Check if function already exists in .zshrc (optional but recommended)
+  # Note: Zsh function definitions might start with 'function func_name {' or just 'func_name () {'
+  if grep -q -E "^\s*(function\s+)?${func_name}\s*(\(\))?\s*\{" ~/.zshrc; then
+    echo "Warning: Function '$func_name' seems to already exist in ~/.zshrc."
+    echo "Not adding it again. Please check ~/.zshrc manually if you want to update it."
+    return 1
+  fi
+
+  echo "" >> ~/.zshrc # Add a newline
+  echo "$func_definition" >> ~/.zshrc
+  echo "Function '$func_name' added to ~/.zshrc."
+  echo "It will be available in new shell sessions."
+  echo "To make it available in the current session if it was newly added by this command, run: source ~/.zshrc"
+}
+
+my_zsh_temp_func () {
+	echo "This is a new temp function"
+	print -l ${(k)aliases}
+}
+export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+
+. "$HOME/.local/bin/env"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+export PATH=$PATH:$HOME/.local/opt/go/bin
+export PATH=$PATH:$HOME/go/bin
+export EDITOR="nvim"
+export PATH=$PATH:$HOME/Applications/GoLand.app/Contents/MacOS
+
+# opencode
+export PATH=/Users/hlt/.opencode/bin:$PATH
+
+# aliases
+alias v="nvim"
+alias k="kubectl"
+
+# temporary aliases
+alias current="cd /Users/hlt/git/github.com/rocketsciencegg/"
+
+# fzf key bindings and fuzzy completion
+[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+
+# Smart history search - search history based on what you've typed
+# Ctrl-P: search backward for commands starting with current input
+# Ctrl-N: search forward for commands starting with current input
+bindkey "^P" history-beginning-search-backward
+bindkey "^N" history-beginning-search-forward
+
+# ============================================================
+# Enhanced fzf Configuration with bat, fd, ripgrep
+# ============================================================
+
+# Use fd for file/directory searches (faster, respects .gitignore)
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+
+# Better file preview with bat (syntax highlighting)
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}' --preview-window=right:60%"
+
+# Better history preview with copy to clipboard support (Ctrl-Y)
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
+
+# ============================================================
+# Zoxide - Smart Directory Jumping
+# ============================================================
+eval "$(zoxide init zsh)"
+
+# ============================================================
+# Custom Keybindings and Functions
+# ============================================================
+
+# Alt-E: Fuzzy find and edit file with nvim
+fzf-edit-widget() {
+  local file
+  file=$(fd --type f --hidden --follow --exclude .git | fzf --preview 'bat --color=always --style=numbers {}' --preview-window=right:60%)
+  if [[ -n $file ]]; then
+    BUFFER="$EDITOR $file"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N fzf-edit-widget
+bindkey '^[e' fzf-edit-widget  # Alt-E
+
+# Alt-S: SSH to host (fuzzy select from ~/.ssh/config)
+fzf-ssh() {
+  local selected_host
+  selected_host=$(grep -E "^Host " ~/.ssh/config ~/.colima/ssh_config 2>/dev/null | grep -v '\*' | awk '{print $2}' | sort -u | fzf --height 40% --reverse --prompt="SSH to: ")
+  if [[ -n $selected_host ]]; then
+    BUFFER="ssh $selected_host"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N fzf-ssh
+bindkey '^[s' fzf-ssh  # Alt-S
+
+# Jump to git root directory
+cdgitroot() {
+  local root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -n $root ]]; then
+    cd "$root"
+    zle reset-prompt
+  else
+    echo "Not in a git repository"
+  fi
+}
+alias cdr='cdgitroot'
+
+# ============================================================
+# Cloud CLI Helpers
+# ============================================================
+
+# GCloud configuration switcher with fzf
+gcp() {
+  local config
+  config=$(gcloud config configurations list --format="value(name)" 2>/dev/null | fzf --height 40% --reverse --prompt="GCloud config: ")
+  if [[ -n $config ]]; then
+    gcloud config configurations activate "$config"
+  fi
+}
+
+# AWS profile switcher with fzf (for when AWS CLI is installed)
+awsp() {
+  if ! command -v aws &> /dev/null; then
+    echo "AWS CLI not installed. Install with: brew install awscli"
+    return 1
+  fi
+  local profile
+  profile=$(aws configure list-profiles 2>/dev/null | fzf --height 40% --reverse --prompt="AWS profile: ")
+  if [[ -n $profile ]]; then
+    export AWS_PROFILE="$profile"
+    echo "✓ Switched to AWS profile: $profile"
+  fi
+}
+
+# ============================================================
+# Useful Aliases
+# ============================================================
+
+# Better ls
+alias ll='ls -lah'
+alias la='ls -A'
+
+# Ripgrep with useful defaults
+alias rgg='rg --hidden --glob "!.git"'
+
+# Quick directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Kubectl shortcuts (extending your existing 'k' alias)
+alias kgp='kubectl get pods'
+alias kgs='kubectl get services'
+alias kgd='kubectl get deployments'
+alias kctx='kubectl config use-context'
+alias kns='kubectl config set-context --current --namespace'
+
+# Git shortcuts
+alias gs='git status'
+alias gd='git diff'
+alias gl='git log --oneline --graph --decorate'
+
+eval "$(starship init zsh)"

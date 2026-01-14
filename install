@@ -23,7 +23,12 @@ done
 for file in home/*; do
     [ -f "$file" ] || continue
     filename=$(basename "$file")
-    target="$HOME/$filename"
+    # Add dot prefix for dotfiles (unless it already has one)
+    if [[ "$filename" != .* ]]; then
+        target="$HOME/.$filename"
+    else
+        target="$HOME/$filename"
+    fi
 
     if [ -e "$target" ] && [ ! -L "$target" ]; then
         echo "Warning: $target already exists and is not a symlink. Skipping $filename."
