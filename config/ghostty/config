@@ -45,3 +45,9 @@
 # Enable Option key as Alt for terminal keybindings
 # This allows Alt-based keybindings to work (Alt-C, Alt-E, Alt-S, etc.)
 macos-option-as-alt = true
+
+# Font configuration
+font-family = GoMono Nerd Font Mono
+font-size = 14.5
+font-thicken = true
+font-thicken-strength = 128
